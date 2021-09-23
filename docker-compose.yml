@@ -13,7 +13,7 @@ services:
     volumes:
       - ~/backendimg:/src/image_resource
     networks:
-       docker_network:
+       project221:
           ipv4_address: 172.25.0.5
           
 networks:

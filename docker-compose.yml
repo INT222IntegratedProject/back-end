@@ -14,7 +14,6 @@ services:
       - ~/backendimg:/src/image_resource
     networks:
        project221:
-          ipv4_address: 172.25.0.5
           
 networks:
   default:

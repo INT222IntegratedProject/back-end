@@ -13,7 +13,7 @@ pipeline {
                            sh 'docker rm backend'
                            sh 'docker image rm backend'
                     }else {
-                        echo 'Skip this stage '
+                        echo 'This stage does not occur.'
                     }
                 }
             }

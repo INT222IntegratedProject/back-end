@@ -2,7 +2,7 @@ pipeline {
     agent any
     stages {
 
-        stage('stop and remove container, image') {
+        stage('stop then remove container and image') {
             steps {
                 script {
                     def imageExists = sh(script: 'docker images -q backend', returnStdout: true) == ""
@@ -19,7 +19,7 @@ pipeline {
             }
         }
 
-        stage('remove whole data') {
+        stage('remove all the data') {
             steps {
                 sh 'rm -rf *'
             }
@@ -33,7 +33,7 @@ pipeline {
             }
         }
 
-        stage('(deploy) start contianer') {
+        stage('start contianer') {
             steps {
                 sh 'docker-compose up -d'
             }

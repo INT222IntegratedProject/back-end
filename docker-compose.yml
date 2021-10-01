@@ -11,7 +11,7 @@ services:
       - MYSQL_USER= int222db
       - MYSQL_ROOT_PASSWORD= int222db
     volumes:
-      - ~/backendimg:/src/image_resource
+      - /home/INT222project/backendimg:/src/image_resource
     networks:
        project221:
           

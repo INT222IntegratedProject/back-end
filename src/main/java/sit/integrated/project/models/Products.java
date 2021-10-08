@@ -56,6 +56,9 @@ public class Products {
 
     private List<Colors> ProductColors= new ArrayList<>();
 
+    @ManyToOne
+    @JoinColumn(name="users_userId", nullable=false)
+    private Users UserId;
 
 }
 

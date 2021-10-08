@@ -33,7 +33,7 @@ public class Users {
     private Integer userTel;
 
     @Column( name ="userAddress")
-    private Integer userAddress;
+    private String userAddress;
 
     @ManyToOne
     @JoinColumn(name="roles_roleId", nullable=false)

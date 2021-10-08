@@ -1,23 +1,24 @@
+
 package sit.integrated.project.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import sit.integrated.project.models.Colors;
-import sit.integrated.project.repositories.ColorsRepositories;
-
+import sit.integrated.project.models.Feedback;
+import sit.integrated.project.repositories.FeedbackRepositories;
 import java.util.List;
 
 @RestController
-@RequestMapping("/Colors")
+@RequestMapping("/Feedback")
 @CrossOrigin
-public class ColorsController {
+public class FeedbackController {
     @Autowired
-    private ColorsRepositories ColorsRepositories;
+    private FeedbackRepositories feedbackRepositories;
 
-    @GetMapping("/GetColors")
-    public List<Colors> listAllProduct(){
-        return ColorsRepositories.findAll();
+    @GetMapping("/GetFeedback")
+    public List<Feedback> listAllBrands(){
+        return feedbackRepositories.findAll();
     }
+
 }

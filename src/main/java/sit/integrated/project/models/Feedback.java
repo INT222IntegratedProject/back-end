@@ -22,9 +22,4 @@ public class Feedback {
     @JoinColumn(name="users_userId", nullable=false)
     private Users usersId;
 
-//    @ManyToOne
-//    @JoinColumn(name="roles_rolesId", nullable=false)
-//    private Roles rolesId;
-
-
 }

@@ -18,10 +18,6 @@ public class RolesController {
     @Autowired
     private RolesRepositories rolesRepositories;
 
-    private Roles roles;
-
-
-
     @GetMapping("/GetRoles")
     public List<Roles> ListAllRoles(){return rolesRepositories.findAll(); }
 }

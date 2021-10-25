@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import sit.integrated.project.models.Feedback;
 import sit.integrated.project.models.Products;
+import sit.integrated.project.models.Roles;
 import sit.integrated.project.repositories.FeedbackRepositories;
 import java.util.List;
 
@@ -31,6 +32,23 @@ public class FeedbackController {
             }
         }
         return feedback;
+    }
+
+    @PostMapping("/Create")
+    public Feedback createFeedback(@RequestBody Feedback feedback){
+        List<Feedback> listfeed = feedbackRepositories.findAll();
+        Feedback[] feedArrays = new Feedback[listfeed.size()];
+        listfeed.toArray(feedArrays);
+        feedback.setFeedbackId(feedbackRepositories.feedbackLatestId() + 1);
+        feedbackRepositories.save(feedback);
+        return feedback;
+    }
+
+    @DeleteMapping("/Delete/{id}")
+    public void deleteRole(@PathVariable int id){
+
+        feedbackRepositories.deleteById(id);
+
     }
 
 }

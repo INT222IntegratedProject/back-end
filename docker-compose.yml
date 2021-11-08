@@ -14,7 +14,7 @@ services:
       - /home/INT222project/backendimg:/src/image_resource
     networks:
        project221:
-          
+          ipv4_address: 172.25.0.2
 networks:
   default:
     external:

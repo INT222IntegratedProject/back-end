@@ -11,7 +11,7 @@ services:
       - MYSQL_USER= int222db
       - MYSQL_ROOT_PASSWORD= int222db
     volumes:
-      - /home/INT222project/backendimg:/src/image_resource
+      - /home/INT222project/backend_img:/src/image_resource
     networks:
        project222:
           ipv4_address: 172.25.0.2

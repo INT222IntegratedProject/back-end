@@ -5,10 +5,12 @@ package sit.integrated.project.controllers;
 import org.springframework.web.bind.annotation.*;
 import sit.integrated.project.exceptions.ExceptionResponse;
 import sit.integrated.project.exceptions.ProductsException;
+import sit.integrated.project.models.Feedback;
 import sit.integrated.project.models.Products;
 import sit.integrated.project.repositories.ProductsRepositories;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -28,6 +30,24 @@ public class ProductController {
 
     @GetMapping("/GetProducts/{id}")
     public  Products getProductById(@PathVariable int id){ return  productsRepositories.findById(id).orElse(null); }
+
+    @GetMapping("/GetProducts/Brands/{brandName}")
+    public  Object[] getProductByBrands(@PathVariable String brandName){
+        List<Products> productsList = productsRepositories.findAll();
+        Products[] productsArray = new Products[productsList.size()];
+        productsList.toArray(productsArray);
+        Object[] product = Arrays.stream(productsArray).filter(x -> x.getBrandId().getBrandId().contains(brandName)).toArray();
+        return product;
+   }
+
+    @GetMapping("/GetProducts/Gender/{gender}")
+    public Object[] getProductByGender(@PathVariable String gender){
+        List<Products> productsList = productsRepositories.findAll();
+        Products[] productsArray = new Products[productsList.size()];
+        productsList.toArray(productsArray);
+        Object[] product = Arrays.stream(productsArray).filter(x -> x.getProductGender().contains(gender)).toArray();
+        return  product;
+    }
 
      @PostMapping("/Create")
     public Products createProduct(@RequestBody Products products){
@@ -51,7 +71,7 @@ public class ProductController {
             productsRepositories.save(products);
             return products;
         }
-        else throw  new ProductsException(ExceptionResponse.ERROR_CODE.ITEM_DOES_NOT_EXIST , "The product DOES NOT EXIST");
+        else throw  new ProductsException(ExceptionResponse.ERROR_CODE.ITEM_DOES_NOT_EXIST , "DOES NOT EXIST");
 
     }
 

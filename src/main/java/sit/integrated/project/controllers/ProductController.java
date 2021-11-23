@@ -48,6 +48,15 @@ public class ProductController {
         Object[] product = Arrays.stream(productsArray).filter(x -> x.getProductGender().contains(gender)).toArray();
         return  product;
     }
+    
+    @GetMapping("/GetProducts/Type/{type}")
+    public Object[] getProductByType(@PathVariable String type){
+        List<Products> productsList = productsRepositories.findAll();
+        Products[] productsArray = new Products[productsList.size()];
+        productsList.toArray(productsArray);
+        Object[] product = Arrays.stream(productsArray).filter(x -> x.getProductType().contains(type)).toArray();
+        return  product;
+    }
 
      @PostMapping("/Create")
     public Products createProduct(@RequestBody Products products){

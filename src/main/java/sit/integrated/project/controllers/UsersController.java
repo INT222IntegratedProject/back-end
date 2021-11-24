@@ -27,6 +27,15 @@ public class UsersController {
 
     @GetMapping("/GetUsers/{id}")
     public Users getUserById(@PathVariable int id){ return  usersRepositories.findById(id).orElse(null); }
+    
+    @GetMapping("/Login/{username}")
+    public Object[] getUserByUsername(@PathVariable String username){
+        List<Users> usersList = usersRepositories.findAll();
+        Users[] usersArray = new Users[usersList.size()];
+        usersList.toArray(usersArray);
+        Object[] user = Arrays.stream(usersArray).filter(x -> x.getUserName().contains(username)).toArray();
+        return  user;
+         }
 
     @PostMapping("/Create")
     public Users createUsers(@RequestBody Users user){

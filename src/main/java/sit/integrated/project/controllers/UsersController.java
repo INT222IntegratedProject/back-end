@@ -5,8 +5,10 @@ import org.springframework.web.bind.annotation.*;
 import sit.integrated.project.exceptions.ExceptionResponse;
 import sit.integrated.project.exceptions.ProductsException;
 import sit.integrated.project.models.Feedback;
+import sit.integrated.project.models.JwtUser;
 import sit.integrated.project.models.Products;
 import sit.integrated.project.models.Users;
+import sit.integrated.project.repositories.JwtUserRepositories;
 import sit.integrated.project.repositories.UsersRepositories;
 import java.util.List;
 
@@ -17,6 +19,8 @@ public class UsersController {
     @Autowired
     private UsersRepositories usersRepositories;
 
+    @Autowired
+    private JwtUserRepositories jwtusersRepositories;
 
     @GetMapping("/GetUsers")
     public List<Users> ListAllUsers(){return usersRepositories.findAll(); }
@@ -26,6 +30,12 @@ public class UsersController {
 
     @PostMapping("/Create")
     public Users createUsers(@RequestBody Users user){
+        String username = user.getUserName();
+        String password = user.getUserPassword();
+        JwtUser userJwt = new JwtUser();
+        userJwt.setUsername(username);
+        userJwt.setPassword(password);
+        jwtusersRepositories.save(userJwt);
         List<Users> listuser = usersRepositories.findAll();
         Users[] userArrays = new Users[listuser.size()];
         listuser.toArray(userArrays);

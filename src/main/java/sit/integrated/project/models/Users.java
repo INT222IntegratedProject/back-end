@@ -4,18 +4,18 @@ import lombok.Getter;
 import lombok.Setter;
 import javax.persistence.*;
 
+
 @Entity
 @Table(name = "Users")
 @Getter@Setter
 public class Users {
-
     @Id
 
     @Column( name ="userId")
     private Integer userId;
 
-    @Column( name ="UserName")
-    private String UserName;
+    @Column( name ="userName")
+    private String userName;
 
     @Column( name ="userPassword")
     private String userPassword;

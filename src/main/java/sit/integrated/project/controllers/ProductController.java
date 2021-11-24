@@ -48,7 +48,7 @@ public class ProductController {
         Object[] product = Arrays.stream(productsArray).filter(x -> x.getProductGender().contains(gender)).toArray();
         return  product;
     }
-    
+
     @GetMapping("/GetProducts/Type/{type}")
     public Object[] getProductByType(@PathVariable String type){
         List<Products> productsList = productsRepositories.findAll();

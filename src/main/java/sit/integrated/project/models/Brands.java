@@ -11,9 +11,9 @@ import javax.persistence.*;
 public class Brands {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "brandid")
+    @Column(name = "brandId")
     private String brandId;
 
-    @Column(name = "brandname")
+    @Column(name = "brandName")
     private String brandName;
 }

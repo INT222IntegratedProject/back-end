@@ -13,8 +13,6 @@ import sit.integrated.project.models.JwtResponse;
 import org.springframework.security.authentication.AuthenticationManager;
 import sit.integrated.project.services.JwtUserDetailsService;
 
-import javax.xml.bind.SchemaOutputResolver;
-
 @RestController
 @CrossOrigin
 public class JwtAuthenticationController {

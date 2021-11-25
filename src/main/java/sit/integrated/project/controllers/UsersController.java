@@ -1,6 +1,7 @@
 package sit.integrated.project.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import sit.integrated.project.exceptions.ExceptionResponse;
 import sit.integrated.project.exceptions.ProductsException;
@@ -10,6 +11,8 @@ import sit.integrated.project.models.Products;
 import sit.integrated.project.models.Users;
 import sit.integrated.project.repositories.JwtUserRepositories;
 import sit.integrated.project.repositories.UsersRepositories;
+
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -22,47 +25,19 @@ public class UsersController {
     @Autowired
     private JwtUserRepositories jwtusersRepositories;
 
+    private BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
+
     @GetMapping("/GetUsers")
-    public List<Users> ListAllUsers(){return usersRepositories.findAll(); }
+    public List<Users> ListAllUsers(){
+        return usersRepositories.findAll();
+    }
 
     @GetMapping("/GetUsers/{id}")
-    public Users getUserById(@PathVariable int id){ return  usersRepositories.findById(id).orElse(null); }
-    
-    @GetMapping("/Login/{username}")
-    public Object[] getUserByUsername(@PathVariable String username){
-        List<Users> usersList = usersRepositories.findAll();
-        Users[] usersArray = new Users[usersList.size()];
-        usersList.toArray(usersArray);
-        Object[] user = Arrays.stream(usersArray).filter(x -> x.getUserName().contains(username)).toArray();
-        return  user;
-         }
-
-    @PostMapping("/Create")
-    public Users createUsers(@RequestBody Users user){
-        String username = user.getUserName();
-        String password = user.getUserPassword();
-        JwtUser userJwt = new JwtUser();
-        userJwt.setUsername(username);
-        userJwt.setPassword(password);
-        jwtusersRepositories.save(userJwt);
-        List<Users> listuser = usersRepositories.findAll();
-        Users[] userArrays = new Users[listuser.size()];
-        listuser.toArray(userArrays);
-        user.setUserId(usersRepositories.userLatestId() + 1);
-        usersRepositories.save(user);
-        return user;
-    }
-
-    @PutMapping("/Edit/{id}")
-    public Users editUser(@RequestBody Users users, @PathVariable int id){
-        if (hasFoundId(id) && (id == users.getUserId())) {
-            usersRepositories.save(users);
-            return users;
-        }
-        else throw  new ProductsException(ExceptionResponse.ERROR_CODE.ITEM_DOES_NOT_EXIST , "DOES NOT EXIST");
+    public Users getUserById(@PathVariable int id){
+    return usersRepositories.findById(id).orElse(null);
 
     }
-    
+
     @PostMapping("/Login")
     public Users login(@RequestBody JwtUser user){
         List<Users>  usersList = usersRepositories.findAll();
@@ -79,12 +54,40 @@ public class UsersController {
         }
         return null;
     }
-    
+
+
+    @PostMapping("/Create")
+    public Users createUsers(@RequestBody Users user){
+            String username = user.getUserName();
+            String password = bcrypt.encode(user.getUserPassword());
+            JwtUser userJwt = new JwtUser();
+            userJwt.setUsername(username);
+            userJwt.setPassword(password);
+            jwtusersRepositories.save(userJwt);
+            List<Users> listuser = usersRepositories.findAll();
+            Users[] userArrays = new Users[listuser.size()];
+            listuser.toArray(userArrays);
+            user.setUserId(usersRepositories.userLatestId() + 1);
+            usersRepositories.save(user);
+            return user;
+    }
+
+
+
+    @PutMapping("/Edit/{id}")
+    public Users editUser(@RequestBody Users users, @PathVariable int id){
+
+            if (hasFoundId(id) && (id == users.getUserId())) {
+                usersRepositories.save(users);
+                return users;
+            } else throw new ProductsException(ExceptionResponse.ERROR_CODE.ITEM_DOES_NOT_EXIST, "DOES NOT EXIST");
+    }
+
     @DeleteMapping("/Delete/{id}")
     public String deleteUsers(@PathVariable int id){
-        usersRepositories.deleteById(id);
-        String s = String.valueOf(id);
-        return s+"has been deleted";
+            usersRepositories.deleteById(id);
+            String s = String.valueOf(id);
+            return s + "has been deleted";
     }
 
     public boolean hasFoundId(int id){

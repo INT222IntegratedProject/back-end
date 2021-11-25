@@ -18,6 +18,5 @@ public class int221ProjectApplication implements CommandLineRunner {
 		File file = new File(dir);
 		file.mkdirs();
 
-
 	}
 }

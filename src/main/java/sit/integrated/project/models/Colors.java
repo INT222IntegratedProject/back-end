@@ -16,7 +16,6 @@ public class Colors {
     @Column(name ="colorname")
     private String colorName;
 
-
     @Column(name ="codecolor")
     private String CodeColor;
 }

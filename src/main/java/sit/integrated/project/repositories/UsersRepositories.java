@@ -5,6 +5,7 @@ import sit.integrated.project.models.Users;
 
 public interface UsersRepositories extends JpaRepository<Users, Integer> {
     @Query(value = "SELECT max(userId) from Users ")
-    public int userLatestId();
+     int userLatestId();
 
+     Users findByUserName (String username);
 }

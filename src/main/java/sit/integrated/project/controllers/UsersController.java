@@ -62,7 +62,24 @@ public class UsersController {
         else throw  new ProductsException(ExceptionResponse.ERROR_CODE.ITEM_DOES_NOT_EXIST , "DOES NOT EXIST");
 
     }
-
+    
+    @PostMapping("/Login")
+    public Users login(@RequestBody JwtUser user){
+        List<Users>  usersList = usersRepositories.findAll();
+        Users[] userArray = new Users[usersList.size()];
+        usersList.toArray(userArray);
+        String checkUser;
+        String checkPass;
+        for(int i = 0 ; i < userArray.length; i++ ){
+            checkUser = userArray[i].getUserName();
+            checkPass = userArray[i].getUserPassword();
+            if(checkUser.contains(user.getUsername())  && checkPass.contains(user.getPassword()) ){
+                return userArray[i];
+            }
+        }
+        return null;
+    }
+    
     @DeleteMapping("/Delete/{id}")
     public String deleteUsers(@PathVariable int id){
         usersRepositories.deleteById(id);

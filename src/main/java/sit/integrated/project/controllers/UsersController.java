@@ -34,26 +34,17 @@ public class UsersController {
 
     @GetMapping("/GetUsers/{id}")
     public Users getUserById(@PathVariable int id){
-    return usersRepositories.findById(id).orElse(null);
+    return usersRepositories.findById(id).orElseThrow(()->new RuntimeException());
 
     }
 
-    @PostMapping("/Login")
-    public Users login(@RequestBody JwtUser user){
-        List<Users>  usersList = usersRepositories.findAll();
-        Users[] userArray = new Users[usersList.size()];
-        usersList.toArray(userArray);
-        String checkUser;
-        String checkPass;
-        for(int i = 0 ; i < userArray.length; i++ ){
-            checkUser = userArray[i].getUserName();
-            checkPass = userArray[i].getUserPassword();
-            if(checkUser.contains(user.getUsername())  && checkPass.contains(user.getPassword()) ){
-                return userArray[i];
-            }
-        }
-        return null;
+    @GetMapping("/Login")
+    public Users login(@RequestParam String username){
+        Users  users = usersRepositories.findByUserName(username);
+
+        return users;
     }
+
 
 
     @PostMapping("/Create")

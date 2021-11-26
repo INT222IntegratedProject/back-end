@@ -41,20 +41,6 @@ public class UsersController {
     return usersRepositories.findById(id).orElseThrow(()->new RuntimeException());
     }
 
-    @GetMapping("/GetUserFeedback/{id}")
-    public String getUserFeedback(@PathVariable int id){
-        List<Users> UsersList = usersRepositories.findAll();
-        Users[] usersArray = new Users[UsersList.size()];
-        UsersList.toArray(usersArray);
-        String username = "";
-        for(int i = 0 ; i < usersArray.length; i++ ) {
-            if(usersArray[i].getUserId()==id){
-                username = usersArray[i].getUserName();
-            }
-        }
-
-        return username;
-    }
 
     @GetMapping("/Login")
     public Users login(@RequestParam String username){

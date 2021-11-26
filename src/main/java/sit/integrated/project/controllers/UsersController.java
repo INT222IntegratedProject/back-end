@@ -9,11 +9,13 @@ import sit.integrated.project.models.Feedback;
 import sit.integrated.project.models.JwtUser;
 import sit.integrated.project.models.Products;
 import sit.integrated.project.models.Users;
+import sit.integrated.project.repositories.FeedbackRepositories;
 import sit.integrated.project.repositories.JwtUserRepositories;
 import sit.integrated.project.repositories.UsersRepositories;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/Users")
@@ -25,6 +27,8 @@ public class UsersController {
     @Autowired
     private JwtUserRepositories jwtusersRepositories;
 
+    private FeedbackRepositories feedbackRepositories;
+
     private BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
 
     @GetMapping("/GetUsers")
@@ -35,13 +39,26 @@ public class UsersController {
     @GetMapping("/GetUsers/{id}")
     public Users getUserById(@PathVariable int id){
     return usersRepositories.findById(id).orElseThrow(()->new RuntimeException());
+    }
 
+    @GetMapping("/GetUserFeedback/{id}")
+    public String getUserFeedback(@PathVariable int id){
+        List<Users> UsersList = usersRepositories.findAll();
+        Users[] usersArray = new Users[UsersList.size()];
+        UsersList.toArray(usersArray);
+        String username = "";
+        for(int i = 0 ; i < usersArray.length; i++ ) {
+            if(usersArray[i].getUserId()==id){
+                username = usersArray[i].getUserName();
+            }
+        }
+
+        return username;
     }
 
     @GetMapping("/Login")
     public Users login(@RequestParam String username){
         Users  users = usersRepositories.findByUserName(username);
-
         return users;
     }
 

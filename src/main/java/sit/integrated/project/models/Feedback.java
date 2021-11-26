@@ -18,13 +18,11 @@ public class Feedback {
     @Column( name ="message")
     private String message;
 
-    @ManyToOne
-    @JoinColumn(name="users_userId", nullable=false)
-    private Users usersId;
+    @Column(name="users_userId")
+    private Integer usersId;
 
-    @ManyToOne
-    @JoinColumn(name="products_productId", nullable=false)
-    private Products productsId;
+    @Column(name="products_productId")
+    private Integer productsId;
 
 
 }

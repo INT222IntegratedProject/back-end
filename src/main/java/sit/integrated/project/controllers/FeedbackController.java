@@ -27,7 +27,7 @@ public class FeedbackController {
         feedbackList.toArray(feedbackArray);
         Feedback feedback = new Feedback();
         for(int i=0;i< feedbackArray.length;i++){
-            if(feedbackArray[i].getProductsId().getProductId()==pid){
+            if(feedbackArray[i].getProductsId()==pid){
                 feedback = feedbackArray[i];
             }
         }

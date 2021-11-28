@@ -56,6 +56,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         httpSecurity.authorizeRequests().antMatchers(HttpMethod.GET,"/Feedback/**").permitAll();
         httpSecurity.authorizeRequests().antMatchers(HttpMethod.GET,"/Images/**").permitAll();
         httpSecurity.authorizeRequests().antMatchers(HttpMethod.GET,"/Colors/**").permitAll();
+        httpSecurity.authorizeRequests().antMatchers(HttpMethod.GET,"/Brands/**").permitAll();
         
         httpSecurity.authorizeRequests().anyRequest().authenticated();
         httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);

@@ -41,15 +41,6 @@ public class UsersController {
     return usersRepositories.findById(id).orElseThrow(()->new RuntimeException());
     }
 
-
-    @GetMapping("/Login")
-    public Users login(@RequestParam String username){
-        Users  users = usersRepositories.findByUserName(username);
-        return users;
-    }
-
-
-
     @PostMapping("/Create")
     public Users createUsers(@RequestBody Users user){
             String username = user.getUserName();

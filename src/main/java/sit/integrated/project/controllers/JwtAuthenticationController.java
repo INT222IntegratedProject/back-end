@@ -11,11 +11,16 @@ import sit.integrated.project.config.JwtTokenUtil;
 import sit.integrated.project.models.JwtRequest;
 import sit.integrated.project.models.JwtResponse;
 import org.springframework.security.authentication.AuthenticationManager;
+import sit.integrated.project.models.Users;
+import sit.integrated.project.repositories.UsersRepositories;
 import sit.integrated.project.services.JwtUserDetailsService;
 
 @RestController
 @CrossOrigin
 public class JwtAuthenticationController {
+
+    @Autowired
+    private UsersRepositories usersRepositories;
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -28,10 +33,12 @@ public class JwtAuthenticationController {
 
     @PostMapping(value = "/authenticate")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
+        Users users = usersRepositories.findByUserName(authenticationRequest.getUsername());
         authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
         final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
         final String token = jwtTokenUtil.generateToken(userDetails);
-        return ResponseEntity.ok(new JwtResponse(token));
+
+        return ResponseEntity.ok(new JwtResponse(token,users));
     }
 
     private void authenticate(String username, String password) throws Exception {

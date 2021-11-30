@@ -59,7 +59,7 @@ public class UsersController {
             return user;
     }
 
-    @PutMapping("/EditRole/{id}")
+    @PostMapping("/EditRole/{id}")
     public Users upgrateUsers(@PathVariable int id){
         Users users = usersRepositories.findById(id).orElseThrow(()->new ProductsException(ExceptionResponse.ERROR_CODE.ITEM_DOES_NOT_EXIST, "DOES NOT EXIST"));
         Roles role = rolesRepositories.findById(91919).orElseThrow(()->new ProductsException(ExceptionResponse.ERROR_CODE.ITEM_DOES_NOT_EXIST, "DOES NOT EXIST"));

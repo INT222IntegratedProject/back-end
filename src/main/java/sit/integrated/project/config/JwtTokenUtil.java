@@ -3,9 +3,11 @@ package sit.integrated.project.config;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+import sit.integrated.project.models.Roles;
 import sit.integrated.project.models.Users;
 import sit.integrated.project.repositories.UsersRepositories;
 
@@ -21,6 +23,9 @@ import java.util.function.Function;
 public class JwtTokenUtil implements Serializable {
 
     private static final long serialVersionUID = -2550185165626007488L;
+
+    @Autowired
+    UsersRepositories usersRepositories;
 
     @Value("#{${integrated.max-token-interval-hour}*60*60*1000}")
     private long JWT_TOKEN_VALIDITY ;
@@ -56,6 +61,9 @@ public class JwtTokenUtil implements Serializable {
     //generate token for user
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
+        Users user =  usersRepositories.findByUserName(userDetails.getUsername());
+        Roles roles = user.getRoleId();
+        claims.put("roles",roles);
         return doGenerateToken(claims, userDetails.getUsername());
     }
 

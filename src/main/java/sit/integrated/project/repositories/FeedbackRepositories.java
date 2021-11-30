@@ -5,5 +5,5 @@ import sit.integrated.project.models.Feedback;
 
 public interface FeedbackRepositories extends JpaRepository<Feedback, Integer> {
     @Query(value = "SELECT max(feedbackId) from Feedback ")
-    public int feedbackLatestId();
+     int feedbackLatestId();
 }

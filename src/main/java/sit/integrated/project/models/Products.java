@@ -58,7 +58,7 @@ public class Products {
 
     @ManyToOne
     @JoinColumn(name="users_userId", nullable=false)
-    private Users UserId;
+    private Users userId;
 
 }
 

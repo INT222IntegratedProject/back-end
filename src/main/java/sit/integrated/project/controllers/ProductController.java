@@ -34,11 +34,7 @@ public class ProductController {
    @GetMapping("/GetProducts")
    public List<Products> getAllProduct(){return productsRepositories.findAll(); }
 
-    @GetMapping("/GetProducts/Users/{id}")
-    public  List<Products> getAllProductByUserId(@PathVariable int id){
-        Optional<Users> users = usersRepositories.findById(id);
-        return  productsRepositories.findAllByUserId(users);
-    }
+   
 
     @GetMapping("/GetProducts/{id}")
     public  Products getProductById(@PathVariable int id){ return  productsRepositories.findById(id).orElse(null); }

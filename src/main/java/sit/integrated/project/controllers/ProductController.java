@@ -47,13 +47,6 @@ public class ProductController {
         return product;
    }
 
-    @GetMapping("/GetProducts/Users/{id}")
-    public List<Products> getProductByUserId(@PathVariable int id){
-       Users users = usersRepositories.findById(id).orElseThrow(()->new ProductsException(ExceptionResponse.ERROR_CODE.ITEM_DOES_NOT_EXIST, "DOES NOT EXIST"));
-       List<Products> productsList = productsRepositories.findAllByUserId(users);
-
-       return productsList;
-    }
 
     @GetMapping("/GetProducts/Gender/{gender}")
     public Object[] getProductByGender(@PathVariable String gender){

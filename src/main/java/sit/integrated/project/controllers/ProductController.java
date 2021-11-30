@@ -7,14 +7,11 @@ import sit.integrated.project.exceptions.ExceptionResponse;
 import sit.integrated.project.exceptions.ProductsException;
 import sit.integrated.project.models.Feedback;
 import sit.integrated.project.models.Products;
-import sit.integrated.project.models.Users;
 import sit.integrated.project.repositories.ProductsRepositories;
 import org.springframework.beans.factory.annotation.Autowired;
-import sit.integrated.project.repositories.UsersRepositories;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 
 @RestController
@@ -24,21 +21,12 @@ public class ProductController {
     @Autowired
     private ProductsRepositories productsRepositories;
 
-    @Autowired
-    private UsersRepositories usersRepositories;
-
     private  Products Product;
 
 
 
    @GetMapping("/GetProducts")
    public List<Products> getAllProduct(){return productsRepositories.findAll(); }
-
-    @GetMapping("/GetProducts/Users/{id}")
-    public  List<Products> getAllProductByUserId(@PathVariable int id){
-        Optional<Users> users = usersRepositories.findById(id);
-        return  productsRepositories.findAllByUserId(users);
-    }
 
     @GetMapping("/GetProducts/{id}")
     public  Products getProductById(@PathVariable int id){ return  productsRepositories.findById(id).orElse(null); }
@@ -51,8 +39,6 @@ public class ProductController {
         Object[] product = Arrays.stream(productsArray).filter(x -> x.getBrandId().getBrandId().contains(brandName)).toArray();
         return product;
    }
-
-
 
     @GetMapping("/GetProducts/Gender/{gender}")
     public Object[] getProductByGender(@PathVariable String gender){

@@ -35,10 +35,10 @@ String FILE_DIRECTORY = "./images/";
     byte[] images = fileInputStream.readAllBytes();
     return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(images);
 }
-
 @PostMapping("/upload/{id}")
 
     public void imageUpload(@RequestParam("File")MultipartFile file, @PathVariable("id") int id ) throws IOException{
+
         String ChangNameOfImages = "." + FilenameUtils.getExtension(file.getOriginalFilename());
         File imageFile = new File(FILE_DIRECTORY + Integer.toString(id) + ChangNameOfImages);
         imageFile.createNewFile();
@@ -48,7 +48,6 @@ String FILE_DIRECTORY = "./images/";
         System.out.println("The File Uploaded Successfully");
 
 }
-
 @PutMapping("/edit/{id}")
     public void imageEdit(@RequestParam("File")MultipartFile file, @PathVariable("id") int id ) throws IOException{
     String ChangNameOfImages = Integer.toString(id)+"." + FilenameUtils.getExtension(file.getOriginalFilename());

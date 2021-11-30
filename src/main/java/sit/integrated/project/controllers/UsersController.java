@@ -72,9 +72,10 @@ public class UsersController {
     }
 
     @DeleteMapping("/Delete/{id}")
-    public void deleteUsers(@PathVariable int id){
-        if(hasFoundId(id)){
-            usersRepositories.deleteById(id);}
+    public String deleteUsers(@PathVariable int id){
+            usersRepositories.deleteById(id);
+            String s = String.valueOf(id);
+            return s + "has been deleted";
     }
 
     public boolean hasFoundId(int id){

@@ -8,6 +8,13 @@ import javax.persistence.*;
 @Table(name = "Roles")
 @Getter@Setter
 public class Roles {
+    public Roles(Integer roleId,String roleName) {
+        this.roleId = roleId;
+        this.roleName = roleName;
+    }
+    public Roles() {
+    }
+
 
     @Id
     @Column(name ="roleId")

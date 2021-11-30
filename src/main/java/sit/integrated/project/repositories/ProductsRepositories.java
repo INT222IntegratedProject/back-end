@@ -11,6 +11,4 @@ import java.util.Optional;
 public interface ProductsRepositories extends JpaRepository<Products,Integer> {
     @Query(value = "SELECT max(productId) from Products ")
      int productLatestId();
-
-    List<Products> findAllByUserId(Users id);
 }

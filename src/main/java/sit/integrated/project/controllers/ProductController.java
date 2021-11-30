@@ -7,11 +7,14 @@ import sit.integrated.project.exceptions.ExceptionResponse;
 import sit.integrated.project.exceptions.ProductsException;
 import sit.integrated.project.models.Feedback;
 import sit.integrated.project.models.Products;
+import sit.integrated.project.models.Users;
 import sit.integrated.project.repositories.ProductsRepositories;
 import org.springframework.beans.factory.annotation.Autowired;
+import sit.integrated.project.repositories.UsersRepositories;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 
 @RestController
@@ -21,12 +24,16 @@ public class ProductController {
     @Autowired
     private ProductsRepositories productsRepositories;
 
+    @Autowired
+    private UsersRepositories usersRepositories;
+
     private  Products Product;
 
 
 
    @GetMapping("/GetProducts")
    public List<Products> getAllProduct(){return productsRepositories.findAll(); }
+
 
     @GetMapping("/GetProducts/{id}")
     public  Products getProductById(@PathVariable int id){ return  productsRepositories.findById(id).orElse(null); }
@@ -39,6 +46,14 @@ public class ProductController {
         Object[] product = Arrays.stream(productsArray).filter(x -> x.getBrandId().getBrandId().contains(brandName)).toArray();
         return product;
    }
+
+    @GetMapping("/GetProducts/Users/{id}")
+    public List<Products> getProductByUserId(@PathVariable int id){
+       Users users = usersRepositories.findById(id).orElseThrow(()->new ProductsException(ExceptionResponse.ERROR_CODE.ITEM_DOES_NOT_EXIST, "DOES NOT EXIST"));
+       List<Products> productsList = productsRepositories.findAllByUserId(users);
+
+       return productsList;
+    }
 
     @GetMapping("/GetProducts/Gender/{gender}")
     public Object[] getProductByGender(@PathVariable String gender){

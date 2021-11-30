@@ -25,7 +25,11 @@ public class UsersController {
     @Autowired
     private JwtUserRepositories jwtusersRepositories;
 
+    @Autowired
     private FeedbackRepositories feedbackRepositories;
+
+    @Autowired
+    private RolesRepositories rolesRepositories;
 
     private BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
 
@@ -55,10 +59,12 @@ public class UsersController {
             return user;
     }
 
-    @PutMapping("/EditRole")
-    public Users upgrateUsers(@RequestBody Users users){
-        Roles role = new Roles( 91919, "Admin");
+    @PutMapping("/EditRole/{id}")
+    public Users upgrateUsers(@PathVariable int id){
+        Users users = usersRepositories.findById(id).orElseThrow(()->new ProductsException(ExceptionResponse.ERROR_CODE.ITEM_DOES_NOT_EXIST, "DOES NOT EXIST"));
+        Roles role = rolesRepositories.findById(91919).orElseThrow(()->new ProductsException(ExceptionResponse.ERROR_CODE.ITEM_DOES_NOT_EXIST, "DOES NOT EXIST"));
         users.setRoleId(role);
+        usersRepositories.save(users);
         return users;
     }
 
@@ -72,10 +78,9 @@ public class UsersController {
     }
 
     @DeleteMapping("/Delete/{id}")
-    public String deleteUsers(@PathVariable int id){
-            usersRepositories.deleteById(id);
-            String s = String.valueOf(id);
-            return s + "has been deleted";
+    public void deleteUsers(@PathVariable int id){
+        if(hasFoundId(id)){
+            usersRepositories.deleteById(id);}
     }
 
     public boolean hasFoundId(int id){

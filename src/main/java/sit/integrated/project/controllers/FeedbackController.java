@@ -25,18 +25,9 @@ public class FeedbackController {
         return feedbackRepositories.findAll();
     }
 
-    @GetMapping("/GetFeedback/{pid}")
-    public Feedback listFeedbackByProductsId(@PathVariable int pid){
-        List<Feedback> feedbackList = feedbackRepositories.findAll();
-        Feedback[] feedbackArray = new Feedback[feedbackList.size()];
-        feedbackList.toArray(feedbackArray);
-        Feedback feedback = new Feedback();
-        for(int i=0;i< feedbackArray.length;i++){
-            if(feedbackArray[i].getProductsId()==pid){
-                feedback = feedbackArray[i];
-            }
-        }
-        return feedback;
+     @GetMapping("/GetFeedback/{pid}")
+    public  List<Feedback> getFeedbackByProductId(@PathVariable int pid){
+        return feedbackRepositories.findAllByproductsId(pid);
     }
 
     @GetMapping("/GetUserFeedback/{id}")

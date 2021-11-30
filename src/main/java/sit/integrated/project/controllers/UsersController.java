@@ -58,7 +58,13 @@ public class UsersController {
     }
 
 
-
+    @PutMapping("/EditRole")
+    public Users upgrateUsers(@RequestBody Users users){
+        Roles role = new Roles( 91919, "Admin");
+        users.setRoleId(role);
+        return users;
+    }
+    
     @PutMapping("/Edit/{id}")
     public Users editUser(@RequestBody Users users, @PathVariable int id){
 

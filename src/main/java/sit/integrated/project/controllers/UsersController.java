@@ -5,12 +5,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import sit.integrated.project.exceptions.ExceptionResponse;
 import sit.integrated.project.exceptions.ProductsException;
-import sit.integrated.project.models.Feedback;
-import sit.integrated.project.models.JwtUser;
-import sit.integrated.project.models.Products;
-import sit.integrated.project.models.Users;
+import sit.integrated.project.models.*;
 import sit.integrated.project.repositories.FeedbackRepositories;
 import sit.integrated.project.repositories.JwtUserRepositories;
+import sit.integrated.project.repositories.RolesRepositories;
 import sit.integrated.project.repositories.UsersRepositories;
 
 import java.util.Arrays;
@@ -57,14 +55,13 @@ public class UsersController {
             return user;
     }
 
-
     @PutMapping("/EditRole")
     public Users upgrateUsers(@RequestBody Users users){
         Roles role = new Roles( 91919, "Admin");
         users.setRoleId(role);
         return users;
     }
-    
+
     @PutMapping("/Edit/{id}")
     public Users editUser(@RequestBody Users users, @PathVariable int id){
 

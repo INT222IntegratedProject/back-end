@@ -1,8 +1,13 @@
 pipeline {
     agent any
+    
+    tools {
+        nodejs "nodejs"
+    }
+    
     stages {
 
-        stage('stop and remove container, image') {
+        stage('stop then remove container and image') {
             steps {
                 script {
                     def imageExists = sh(script: 'docker images -q backend', returnStdout: true) == ""
@@ -13,13 +18,13 @@ pipeline {
                            sh 'docker rm backend'
                            sh 'docker image rm backend'
                     }else {
-                        echo 'Skip this stage '
+                        echo 'skip to next stage'
                     }
                 }
             }
         }
 
-        stage('remove whole data') {
+        stage('remove all data') {
             steps {
                 sh 'rm -rf *'
             }
@@ -33,9 +38,18 @@ pipeline {
             }
         }
 
-        stage('(deploy) start contianer') {
+        stage('start the contianer') {
             steps {
                 sh 'docker-compose up -d'
+            }
+        }
+        
+        stage('test') {
+            steps {
+                sh 'node --version '
+                sh 'npm --version '
+                sh 'npm install -g newman'
+                sh 'newman run https://www.getpostman.com/collections/a2c2eae56c1a211ad4e0'
             }
         }
 

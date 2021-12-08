@@ -49,7 +49,7 @@ pipeline {
                 sh 'node --version '
                 sh 'npm --version '
                 sh 'npm install -g newman'
-                sh 'newman run https://www.getpostman.com/collections/a2c2eae56c1a211ad4e0'
+                sh 'newman run https://www.getpostman.com/collections/a2c2eae56c1a211ad4e0 -k'
             }
         }
 

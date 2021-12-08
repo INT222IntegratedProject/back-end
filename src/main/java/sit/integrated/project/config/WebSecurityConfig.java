@@ -53,9 +53,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         httpSecurity.cors();
         
         httpSecurity.authorizeRequests().antMatchers("/authenticate").permitAll();
+        httpSecurity.authorizeRequests().antMatchers("/Users/Create").permitAll();
         httpSecurity.authorizeRequests().antMatchers(HttpMethod.GET,"/Feedback/**").permitAll();
         httpSecurity.authorizeRequests().antMatchers(HttpMethod.GET,"/Images/**").permitAll();
-        httpSecurity.authorizeRequests().antMatchers(HttpMethod.POST,"/Users/**").permitAll();
         httpSecurity.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         
         httpSecurity.authorizeRequests().anyRequest().authenticated();

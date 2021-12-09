@@ -78,10 +78,12 @@ public class UsersController {
             } else throw new ProductsException(ExceptionResponse.ERROR_CODE.ITEM_DOES_NOT_EXIST, "DOES NOT EXIST");
     }
 
-    @DeleteMapping("/Delete/{id}")
+  @DeleteMapping("/Delete/{id}")
     public void deleteUsers(@PathVariable int id){
         if(hasFoundId(id)){
-            usersRepositories.deleteById(id);}
+            usersRepositories.deleteById(id);
+            Users user = usersRepositories.findById(id).orElseThrow(()->new ProductsException(ExceptionResponse.ERROR_CODE.ITEM_DOES_NOT_EXIST, "DOES NOT EXIST"));
+            jwtusersRepositories.deleteById(user.getUserName());}
     }
 
     public boolean hasFoundId(int id){

@@ -55,7 +55,7 @@ public class UsersController {
             Users[] userArrays = new Users[listuser.size()];
             listuser.toArray(userArrays);
             user.setUserId(usersRepositories.userLatestId() + 1);
-            user.setPassword(password);
+            user.setUserPassword(password);
             usersRepositories.save(user);
             return user;
     }

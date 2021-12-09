@@ -54,6 +54,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         
         httpSecurity.authorizeRequests().antMatchers("/authenticate").permitAll();
         httpSecurity.authorizeRequests().antMatchers("/Users/**").permitAll();
+        httpSecurity.authorizeRequests().antMatchers("/Users/Create").permitAll();
         httpSecurity.authorizeRequests().antMatchers("/Feedback/**").permitAll();
         httpSecurity.authorizeRequests().antMatchers("/Images/**").permitAll();
         httpSecurity.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
